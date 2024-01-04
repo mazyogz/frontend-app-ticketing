@@ -1,0 +1,56 @@
+.gambargradasiIcon {
+  position: relative;
+  width: 719px;
+  height: 950px;
+  object-fit: cover;
+}
+.register,
+.wLogin {
+  display: flex;
+  justify-content: flex-start;
+}
+.wLogin {
+  align-self: stretch;
+  background-color: #fff;
+  overflow: hidden;
+  flex-direction: row;
+  padding: 0 0 0 1px;
+  align-items: center;
+  gap: 134px;
+}
+.register {
+  position: relative;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+}
+@media screen and (max-width: 1200px) {
+  .gambargradasiIcon {
+    display: none;
+  }
+  .wLogin {
+    flex-direction: column;
+  }
+  .register {
+    padding-left: 45px;
+    padding-top: 55px;
+    box-sizing: border-box;
+  }
+}
+@media screen and (max-width: 960px) {
+  .wLogin {
+    flex-direction: column;
+  }
+  .register {
+    padding-left: 75px;
+    box-sizing: border-box;
+  }
+}
+@media screen and (max-width: 420px) {
+  .register {
+    gap: 10px;
+    padding-left: 75px;
+    padding-top: 35px;
+    box-sizing: border-box;
+  }
+}

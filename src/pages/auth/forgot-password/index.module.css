@@ -1,0 +1,58 @@
+.gambargradasiIcon {
+  position: relative;
+  width: 719px;
+  height: 950px;
+  object-fit: cover;
+}
+.lupaPassword,
+.wLupaPassword {
+  display: flex;
+  justify-content: flex-start;
+}
+.wLupaPassword {
+  align-self: stretch;
+  background-color: #fff;
+  overflow: hidden;
+  flex-direction: row;
+  padding: 0 0 0 1px;
+  align-items: center;
+  gap: 134px;
+}
+.lupaPassword {
+  position: relative;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+}
+@media screen and (max-width: 1200px) {
+  .gambargradasiIcon {
+    display: none;
+  }
+  .wLupaPassword {
+    flex-direction: column;
+  }
+  .lupaPassword {
+    padding-left: 45px;
+    padding-top: 55px;
+    box-sizing: border-box;
+  }
+}
+@media screen and (max-width: 960px) {
+  .wLupaPassword {
+    flex-direction: column;
+  }
+  .lupaPassword {
+    padding-left: 75px;
+    box-sizing: border-box;
+  }
+}
+@media screen and (max-width: 420px) {
+  .gambargradasiIcon {
+    display: none;
+  }
+  .lupaPassword {
+    gap: 10px;
+    padding-left: 75px;
+    box-sizing: border-box;
+  }
+}
