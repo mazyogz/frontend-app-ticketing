@@ -38,6 +38,7 @@ const FormLogin = () => {
       if (response.status === 200) {
         sessionStorage.setItem("isLoggedIn", "true");
         sessionStorage.setItem("userData", JSON.stringify(response.data.data));
+        sessionStorage.setItem("accessToken", JSON.stringify(response.data.data.accessToken).replaceAll('"', ''));
         Cookies.set("accessToken", response.data.data.accessToken);
         router.push("/");
       }
@@ -72,6 +73,7 @@ const FormLogin = () => {
     try {
       sessionStorage.removeItem("isLoggedIn");
       sessionStorage.removeItem("userData");
+      sessionStorage.removeItem("accessToken");
       Cookies.remove("accessToken");
       router.push("/");
     } catch (error) {
