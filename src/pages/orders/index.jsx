@@ -44,7 +44,7 @@ const Order = () => {
         );
 
         const data = await response.json();
-        setOrderDetail(data.data);
+        setOrderDetail(data);
         console.log(data)
       } else {
         console.error("Access token not found");
@@ -63,7 +63,7 @@ const Order = () => {
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <ul role="list" className="">
-        {orderDetail.map((order) => (
+        {orderDetail.data.map((order) => (
           <li
             key={order.id}
             className="flex items-center justify-between gap-x-6 py-5"
