@@ -31,6 +31,7 @@ function EventDetail() {
     setModalOpen(!isModalOpen);
     setSelectedTicketId(ticketId);
   };
+  console.log(eventDetail)
 
   const handleAgree = async () => {
     try {
@@ -76,6 +77,8 @@ function EventDetail() {
   if (!eventDetail) {
     return <div>Loading...</div>;
   }
+  console.log(eventDetail)
+  console.log(eventDetail.data.ticketData)
 
   return (
     <div>
