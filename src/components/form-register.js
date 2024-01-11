@@ -7,10 +7,10 @@ const FormRegister = () => {
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [namaLengkap, setNamaLengkap] = useState("");
+  const [nama_lengkap, setNamaLengkap] = useState("");
   const [alamat, setAlamat] = useState("");
   const [email, setEmail] = useState("");
-  const [nomorTelepon, setNomorTelepon] = useState("");
+  const [nomor_telepon, setNomorTelepon] = useState("");
   const [message, setMessage] = useState("");
 
   const handleSubmit = async (e) => {
@@ -21,10 +21,10 @@ const FormRegister = () => {
       const response = await axios.post("/api/auth/register", {
         username,
         password,
-        nama_lengkap: namaLengkap,
+        nama_lengkap,
         alamat,
         email,
-        nomor_telepon: nomorTelepon,
+        nomor_telepon,
       });
 
       setMessage(response.data.message);
@@ -40,103 +40,173 @@ const FormRegister = () => {
   };
 
   const onMasukDiSiniClick = useCallback(() => {
-    router.push("/login");
+    router.push("/auth/login");
   }, [router]);
 
   return (
-    <div className={styles.formdaftar}>
-      <div className={styles.masuk}>
-        <b className={styles.daftar}>Daftar</b>
+    <>
+      <div>
+        <div className="flex min-h-full flex-1 flex-col justify-center py-8 sm:px-6 lg:px-8">
+          <div className="sm:mx-auto sm:w-full sm:max-w-md">
+            <img
+              className="mx-auto h-10 w-auto"
+              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+              alt="Your Company"
+            />
+            <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+              Register your account
+            </h2>
+          </div>
+
+          <div className=" sm:mx-auto sm:w-full sm:max-w-[480px]">
+            <div className="bg-white px-6 py-6 shadow sm:rounded-lg sm:px-12">
+              <form
+                className="space-y-1"
+                onSubmit={handleSubmit}
+              >
+                <div>
+                  <label
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Username
+                  </label>
+                  <div className="mt-1">
+                    <input
+                      className="px-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      type="text"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                      placeholder="Username"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Password
+                  </label>
+                  <div className="mt-1">
+                    <input
+                      className="px-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Password"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Nama Lengkap
+                  </label>
+                  <div className="mt-1">
+                    <input
+                      className="px-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      type="text"
+                      value={nama_lengkap}
+                      onChange={(e) => setNamaLengkap(e.target.value)}
+                      placeholder="Nama Lengkap"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Alamat
+                  </label>
+                  <div className="mt-1">
+                    <input
+                      className="px-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      type="text"
+                      value={alamat}
+                      onChange={(e) => setAlamat(e.target.value)}
+                      placeholder="Alamat . "
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Email
+                  </label>
+                  <div className="mt-1">
+                    <input
+                      className="px-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      type="Email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="Contoh: johndee@gmail.com"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Nomor Telepon
+                  </label>
+                  <div className="mt-1">
+                    <input
+                      className="px-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      type="tel"
+                      value={nomor_telepon}
+                      onChange={(e) => setNomorTelepon(e.target.value)}
+                      placeholder="+62 . "
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <div className="text-sm leading-6">
+                    <a
+                      href="/auth/login"
+                      className="font-semibold text-indigo-600 hover:text-indigo-500"
+                    >
+                      Login
+                    </a>
+                  </div>
+
+                  <div className="text-sm leading-6">
+                    <a
+                      href="/auth/forgot-password"
+                      className="font-semibold text-indigo-600 hover:text-indigo-500"
+                    >
+                      Forgot password?
+                    </a>
+                  </div>
+                </div>
+
+                <div>
+                  <button
+                    type="submit"
+                    className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  >
+                    Sign Up
+                  </button>
+                </div>
+              </form>
+              {message && <p style={{ color: message.includes('gagal') ? 'red' : 'green' }}>{message}</p>}
+            </div>
+          </div>
+        </div>
       </div>
-      <form className={styles.inner} onSubmit={handleSubmit}>
-        <div className={styles.input}>
-          <div className={styles.username}>Username</div>
-          <input
-            className={styles.inputChild}
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="Username"
-            required
-          />
-        </div>
-        <div className={styles.input}>
-          <div className={styles.masuk}>
-            <div className={styles.buatPassword}>Buat Password</div>
-          </div>
-          <input
-            className={styles.inputItem}
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Buat Password"
-            required
-          />
-        </div>
-        <div className={styles.input}>
-          <div className={styles.username}>Nama Lengkap</div>
-          <input
-            className={styles.inputChild}
-            type="text"
-            value={namaLengkap}
-            onChange={(e) => setNamaLengkap(e.target.value)}
-            placeholder="Nama Lengkap"
-            required
-          />
-        </div>
-        <div className={styles.input}>
-          <div className={styles.masuk}>
-            <div className={styles.buatPassword}>Alamat</div>
-          </div>
-          <input
-            className={styles.inputItem}
-            type="text"
-            value={alamat}
-            onChange={(e) => setAlamat(e.target.value)}
-            placeholder="Alamat . "
-            required
-          />
-        </div>
-        <div className={styles.input}>
-          <div className={styles.masuk}>
-            <div className={styles.buatPassword}>Email</div>
-          </div>
-          <input
-            className={styles.inputItem}
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Contoh: johndee@gmail.com"
-            required
-          />
-        </div>
-        <div className={styles.input}>
-          <div className={styles.masuk}>
-            <div className={styles.buatPassword}>Nomor Telepon</div>
-          </div>
-          <input
-            className={styles.inputItem}
-            type="tel"
-            value={nomorTelepon}
-            onChange={(e) => setNomorTelepon(e.target.value)}
-            placeholder="+62 . "
-            required
-          />
-        </div>
-        <div className={styles.buttonWrapper}>
-          <button className={styles.button}type="submit">
-            <div className={styles.terbitkan}>Daftar</div>
-          </button>
-        </div>
-      </form>
-      {message && <p style={{ color: message.includes('gagal') ? 'red' : 'green' }}>{message}</p>}
-      <div className={styles.register}>
-        <div className={styles.sudahPunyaAkun}>Sudah punya akun?</div>
-        <button className={styles.masukDiSini} onClick={onMasukDiSiniClick}>
-          Masuk di sini
-        </button>
-      </div>
-    </div>
+    </>
   );
 };
 
