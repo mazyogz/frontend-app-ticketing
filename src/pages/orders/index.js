@@ -15,6 +15,49 @@ function classNames(...classes) {
 function Order() {
   const [orderDetail, setOrderDetail] = useState(null);
 
+  const handlePayment = async (orderId) => {
+    try {
+      let accessToken = null;
+
+      const cookiesArray = document.cookie.split("; ");
+      const accessTokenCookie = cookiesArray.find((cookie) =>
+        cookie.startsWith("accessToken=")
+      );
+
+      if (accessTokenCookie) {
+        accessToken = accessTokenCookie.split("=")[1];
+      }
+
+      const response = await fetch(
+        `https://backend-app-ticketing-v12-production.up.railway.app/v1/api/payment/${orderId}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({}),
+        }
+      );
+
+      const data = await response.json();
+      window.snap.pay(data.token)
+
+      if (response.ok) {
+        console.log("success");
+      } else {
+        console.error(
+          "Failed to place order:",
+          response.status,
+          response.statusText
+        );
+      }
+
+    } catch (error) {
+      console.error("Error placing order:", error);
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -54,10 +97,28 @@ function Order() {
     fetchData();
   }, []);
 
+
+  useEffect(() => {
+    const snapScript = "https://app.sandbox.midtrans.com/snap/snap.js";
+    const clientKey = "SB-Mid-client-HV7aOKK1G2a7GXBn";
+
+    const script = document.createElement("script");
+    script.src = snapScript;
+    script.setAttribute("data-client-key", clientKey);
+    script.async = true;
+
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    }
+  }, []);
+
+
   console.log(orderDetail);
 
   return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-60">
       <ul>
         {orderDetail?.data.map((order) => (
           <li
@@ -89,7 +150,10 @@ function Order() {
                 <p className="truncate">Order Id {order.order_id_unik}</p>
               </div>
             </div>
-            <button className="flex flex-none items-center gap-x-4">
+            <button
+              onClick={() => handlePayment(order.order_id_unik)}
+              className="flex flex-none items-center gap-x-4"
+            >
               <a
                 href={order.href}
                 className="hidden rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:block"
