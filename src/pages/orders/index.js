@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import Navbar from "@/components/ui/Navbar";
+import { useRouter } from "next/router";
 
 const statuses = {
   settlement: "text-green-700 bg-green-50 ring-green-600/20",
@@ -21,7 +23,21 @@ function classNames(...classes) {
 }
 
 function Order() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const router = useRouter();
   const [orderDetail, setOrderDetail] = useState(null);
+
+  useEffect(() => {
+    // Mengecek nilai isLoggedIn di localStorage atau sessionStorage saat halaman dimuat
+    const isLoggedInLocalStorage = localStorage.getItem("isLoggedIn");
+    const isLoggedInSessionStorage = sessionStorage.getItem("isLoggedIn");
+
+    if (isLoggedInLocalStorage || isLoggedInSessionStorage) {
+      setIsLoggedIn(true);
+    } else {
+      router.push("/auth/login");
+    }
+  }, [router]);
 
   const handlePayment = async (orderId) => {
     try {
@@ -121,43 +137,49 @@ function Order() {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        let accessToken = null;
 
-        if (typeof window !== "undefined") {
-          // Check if running on the client side
-          const cookiesArray = document.cookie.split("; ");
-          const accessTokenCookie = cookiesArray.find((cookie) =>
-            cookie.startsWith("accessToken=")
-          );
-
-          if (accessTokenCookie) {
-            accessToken = accessTokenCookie.split("=")[1];
-          }
-
-          const response = await fetch(
-            `https://backend-app-ticketing-v12-production.up.railway.app/v1/api/order-all`,
-            {
-              method: "GET",
-              headers: {
-                Authorization: `Bearer ${accessToken}`,
-                "Content-Type": "application/json",
-              },
+    if (!isLoggedIn) {
+      return;
+    } else {
+      
+      const fetchData = async () => {
+        try {
+          let accessToken = null;
+  
+          if (typeof window !== "undefined") {
+            // Check if running on the client side
+            const cookiesArray = document.cookie.split("; ");
+            const accessTokenCookie = cookiesArray.find((cookie) =>
+              cookie.startsWith("accessToken=")
+            );
+  
+            if (accessTokenCookie) {
+              accessToken = accessTokenCookie.split("=")[1];
             }
-          );
-
-          const data = await response.json();
-          setOrderDetail(data);
-          console.log(data);
+  
+            const response = await fetch(
+              `https://backend-app-ticketing-v12-production.up.railway.app/v1/api/order-all`,
+              {
+                method: "GET",
+                headers: {
+                  Authorization: `Bearer ${accessToken}`,
+                  "Content-Type": "application/json",
+                },
+              }
+            );
+  
+            const data = await response.json();
+            setOrderDetail(data);
+            console.log(data);
+          }
+        } catch (error) {
+          console.error("Error fetching data:", error);
         }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
+      };
+      
+      fetchData();
+    }
+  }, [isLoggedIn]);
 
   useEffect(() => {
     const snapScript = "https://app.sandbox.midtrans.com/snap/snap.js";
@@ -177,6 +199,8 @@ function Order() {
   console.log(orderDetail);
 
   return (
+    <>
+    <Navbar/>
     <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-60">
       {orderDetail?.status === false && (
         <div className="min-w-0">
@@ -277,6 +301,8 @@ function Order() {
         </ul>
       )}
     </div>
+    </>
+    
   );
 }
 

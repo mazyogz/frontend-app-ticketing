@@ -1,4 +1,6 @@
 import { fetchEventData } from "@/pages/api/event/events";
+import Navbar from "@/components/ui/Navbar";
+import Cookies from "js-cookie";
 
 export async function getServerSideProps() {
   const eventData = await fetchEventData();
@@ -11,6 +13,8 @@ export async function getServerSideProps() {
 
 export default function Home({ eventData }) {
   return (
+    <>
+    <Navbar />
     <div>
       <h1>List of Events</h1>
       <div className="flex m-2">
@@ -24,5 +28,6 @@ export default function Home({ eventData }) {
         ))}
       </div>
     </div>
+    </>
   );
 }

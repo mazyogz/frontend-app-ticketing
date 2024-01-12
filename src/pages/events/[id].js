@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import Navbar from "@/components/ui/Navbar";
 
 function EventDetail() {
   const [eventDetail, setEventDetail] = useState(null);
@@ -81,6 +82,8 @@ function EventDetail() {
   console.log(eventDetail.data.ticketData)
 
   return (
+    <>
+    <Navbar />
     <div>
       <h1>{eventDetail.data.eventData.event_name}</h1>
       <p>Date: {eventDetail.data.eventData.date}</p>
@@ -171,6 +174,7 @@ function EventDetail() {
         ))}
       </div>
     </div>
+    </>
   );
 }
 

@@ -1,21 +1,26 @@
 import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
-const handleLogout = async () => {
-  try {
-    sessionStorage.removeItem("isLoggedIn");
-    sessionStorage.removeItem("userData");
-    Cookies.remove("accessToken");
-    router.push("/");
-  } catch (error) {
-    console.error(error);
-  }
-};
+import { useRouter } from "next/router";
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Example() {
+export default function IsLoginUi() {
+    const router = useRouter(); 
+    
+    const handleLogout = async () => {
+        try {
+          sessionStorage.removeItem("isLoggedIn");
+          sessionStorage.removeItem("userData");
+          sessionStorage.removeItem("accessToken");
+          Cookies.remove("accessToken");
+          router.push("/");
+        } catch (error) {
+          console.error(error);
+        }
+      };
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
