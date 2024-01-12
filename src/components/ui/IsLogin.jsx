@@ -55,7 +55,7 @@ export default function IsLoginUi() {
                 </a>
               )}
             </Menu.Item>
-            <form method="POST" action="">
+            <form method="POST" action="/">
               <Menu.Item>
                 {({ active }) => (
                   <button
