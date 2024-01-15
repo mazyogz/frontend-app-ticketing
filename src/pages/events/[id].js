@@ -1,9 +1,11 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment, useRef } from "react";
 import { useRouter } from "next/router";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
+import { Dialog, Transition } from "@headlessui/react";
 import { CheckCircleIcon, XCircleIcon } from "@heroicons/react/20/solid";
+import { CheckIcon } from "@heroicons/react/24/outline";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -14,6 +16,8 @@ function EventDetail() {
   const [isModalOpen, setModalOpen] = useState(false);
   const router = useRouter();
   const [selectedTicketId, setSelectedTicketId] = useState(null);
+  const [successDialogOpen, setSuccessDialogOpen] = useState(false); // Tambahkan state untuk dialog sukses
+  const cancelButtonRef = useRef(null);
   const eventId = router.query.id;
 
   const today = new Date();
@@ -30,29 +34,6 @@ function EventDetail() {
     const options = { day: "numeric", month: "long", year: "numeric" };
     return new Date(inputDate).toLocaleDateString("id-ID", options);
   };
-
-  const products = [
-    {
-      id: 1,
-      name: "Distant Mountains Artwork Tee",
-      price: "$36.00",
-      description:
-        "You awake in a new, mysterious land. Mist hangs low along the distant mountains. What does it mean?",
-      address: ["Floyd Miles", "7363 Cynthia Pass", "Toronto, ON N3Y 4H8"],
-      email: "f•••@example.com",
-      phone: "1•••••••••40",
-      href: "#",
-      status: "Processing",
-      step: 1,
-      date: "March 24, 2021",
-      datetime: "2021-03-24",
-      imageSrc:
-        "https://tailwindui.com/img/ecommerce-images/confirmation-page-04-product-01.jpg",
-      imageAlt:
-        "Off-white t-shirt with circular dot illustration on the front of mountain ridges that fade.",
-    },
-    // More products...
-  ];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -92,6 +73,11 @@ function EventDetail() {
           accessToken = accessTokenCookie.split("=")[1];
         }
 
+        if (!accessToken) {
+          router.push("/auth/login");
+          return;
+        }
+
         const response = await fetch(
           `https://backend-app-ticketing-v12-production.up.railway.app/v1/api/order/${eventId}/${selectedTicketId}`,
           {
@@ -105,6 +91,7 @@ function EventDetail() {
         );
 
         if (response.ok) {
+          setSuccessDialogOpen(true);
           console.log("Order placed successfully!");
         } else {
           console.error(
@@ -314,95 +301,88 @@ function EventDetail() {
         </div>
       </div>
 
-      {/* <div>
-        <h1>{eventDetail.data.eventData.event_name}</h1>
-        <p>Date: {eventDetail.data.eventData.date}</p>
-        <p>Venue: {eventDetail.data.eventData.venue}</p>
-        <img
-          src={eventDetail.data.eventData.picture}
-          alt={eventDetail.data.eventData.event_name}
-        />
-        <h2>Ticket Options</h2>
-        <div className="flex">
-          {eventDetail.data.ticketData.map((ticket) => (
-            <button
-              key={ticket.id}
-              onClick={() => toggleModal(ticket.id)}
-              className="border-2 flex-row size-auto bg-lime-500 rounded-md"
-            >
-              {isModalOpen && (
-                <div
-                  className="relative z-10"
-                  aria-labelledby="modal-title"
-                  role="dialog"
-                  aria-modal="true"
-                >
-                  <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
-                  <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-                    <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                      <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                        <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                          <div className="sm:flex sm:items-start">
-                            <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke-width="1.5"
-                                stroke="currentColor"
-                                class="w-6 h-6"
-                              >
-                                <path
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
-                                />
-                              </svg>
-                            </div>
-                            <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                              <h3
-                                className="text-base font-semibold leading-6 text-gray-900"
-                                id="modal-title"
-                              >
-                                Lakukan Transaksi
-                              </h3>
-                              <div className="mt-2">
-                                <p className="text-sm text-gray-500">
-                                  Anda akan melanjutkan transaksi, ticket yang
-                                  anda pilih akan dimasukkan kedalam keranjang
-                                  dan menunggu pembayaran.
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                          <button
-                            type="button"
-                            className="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 sm:ml-3 sm:w-auto"
-                            onClick={handleAgree}
-                          >
-                            Setuju
-                          </button>
-                          <button
-                            type="button"
-                            className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
-                          >
-                            Batal
-                          </button>
-                        </div>
+      <Transition.Root show={successDialogOpen} as={Fragment}>
+        <Dialog
+          as="div"
+          className="relative z-10"
+          initialFocus={cancelButtonRef}
+          onClose={() => setSuccessDialogOpen(false)}
+        >
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 z-10 overflow-y-auto">
+            <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                enterTo="opacity-100 translate-y-0 sm:scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              >
+                <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
+                  <div>
+                    <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
+                      <CheckIcon
+                        className="h-6 w-6 text-green-600"
+                        aria-hidden="true"
+                      />
+                    </div>
+                    <div className="mt-3 text-center sm:mt-5">
+                      <Dialog.Title
+                        as="h3"
+                        className="text-base font-semibold leading-6 text-gray-900"
+                      >
+                        Pemesanan Berhasil
+                      </Dialog.Title>
+                      <div className="mt-2">
+                        <p className="text-sm text-gray-500">
+                          Pemesanan tiket konser{" "}
+                          {eventDetail.data.eventData.event_name} berhasil
+                          ditambahkan, silakan cek pada laman pemesanan untuk
+                          melanjutkan pembayaran.
+                        </p>
                       </div>
                     </div>
                   </div>
-                </div>
-              )}
-              <p>{ticket.name}</p>
-              <p>{ticket.price}</p>
-              <p>{ticket.status}</p>
-            </button>
-          ))}
-        </div>
-      </div> */}
+                  <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
+                    <button
+                      type="button"
+                      className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-2"
+                      onClick={() => {
+                        setSuccessDialogOpen(false);
+                        router.push("/orders");
+                      }}
+                    >
+                      Lihat Pesanan
+                    </button>
+                    <button
+                      type="button"
+                      className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"
+                      onClick={() => setSuccessDialogOpen(false)}
+                      ref={cancelButtonRef}
+                    >
+                      Batal
+                    </button>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition.Root>
+
       <Footer />
     </>
   );
