@@ -154,15 +154,15 @@ function EventDetail() {
                 </div>
                 <div className="mt-6 sm:col-span-7 sm:mt-0 md:row-end-1">
                   <h3 className="text-lg font-medium text-gray-900">
-                    <a href="#">{eventDetail.data.eventData.event_name}</a>
+                    <p>{eventDetail.data.eventData.event_name}</p>
                   </h3>
                   <p className="mt-1 font-medium text-gray-900">
                     {eventDetail.data.eventData.guest}
                   </p>
-                  <p className="mt-3 text-gray-500">Deskripsi</p>
+                  <p className="mt-3 text-gray-500">{eventDetail.data.eventData.description}</p>
                 </div>
                 <div className="sm:col-span-12 md:col-span-7">
-                  <dl className="grid grid-cols-1 gap-y-8 border-b border-gray-200 py-8 sm:grid-cols-2 sm:gap-x-6 sm:py-6 md:py-10">
+                  <dl className="grid grid-cols-1 gap-y-8 border-b border-gray-200 py-4 sm:grid-cols-2 sm:gap-x-6 sm:py-4 md:py-4">
                     <div>
                       <dt className="font-medium text-gray-900">
                         Waktu dan Tempat
