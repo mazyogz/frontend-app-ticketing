@@ -278,7 +278,7 @@ function Order() {
                     href={order.href}
                     className="hidden rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:block"
                   >
-                    Payment<span className="sr-only">, {order.name}</span>
+                    Pembayaran<span className="sr-only">, {order.name}</span>
                   </a>
                 </button>
               )}
@@ -292,7 +292,7 @@ function Order() {
                     href={order.href}
                     className="hidden rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:block"
                   >
-                    Cetak Tiket<span className="sr-only">, {order.name}</span>
+                    Kirim ke Email<span className="sr-only">, {order.name}</span>
                   </a>
                 </button>
               )}

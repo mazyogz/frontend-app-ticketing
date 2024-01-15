@@ -3,6 +3,8 @@ import React, { useRef } from "react";
 import Navbar from "@/components/ui/Navbar";
 import Cookies from "js-cookie";
 import Footer from "@/components/ui/Footer";
+import TestimonialsComponents from "@/components/ui/TestimonialsComponents";
+import SupportComponents from "@/components/ui/SuppportComponents";
 
 const formatDate = (inputDate) => {
   const options = { day: "numeric", month: "long", year: "numeric" };
@@ -108,6 +110,8 @@ export default function Home({ eventData }) {
         </div>
       </div>
 
+      <TestimonialsComponents />
+      <SupportComponents />
       <Footer />
     </>
   );
