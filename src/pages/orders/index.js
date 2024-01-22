@@ -247,7 +247,7 @@ function Order() {
               <div className="min-w-0">
                 <div className="flex items-start gap-x-3">
                   <p className="text-sm font-semibold leading-6 text-gray-900">
-                    {order.event_id} - {formatCurrency(order.gross)}
+                    {order.event.event_name} - {formatCurrency(order.gross)}
                   </p>
                   <p
                     className={classNames(
