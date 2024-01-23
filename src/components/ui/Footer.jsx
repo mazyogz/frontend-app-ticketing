@@ -97,11 +97,12 @@ const navigation = {
         <div className="mx-auto max-w-7xl px-6 pb-8 pt-16 sm:pt-24 lg:px-8 lg:pt-32">
           <div className="xl:grid xl:grid-cols-3 xl:gap-8">
             <div className="space-y-8">
-              <img
+              {/* <img
                 className="h-7"
                 src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                 alt="Company name"
-              />
+              /> */}
+              <h3 className="font-black text-2xl italic text-indigo-600">FTIX</h3>
               <p className="text-sm leading-6 text-gray-600">
                 Making the world a better place through constructing elegant hierarchies.
               </p>
