@@ -39,9 +39,9 @@ const LoginAdmin = () => {
         sessionStorage.setItem("userData", JSON.stringify(response.data.data));
         sessionStorage.setItem(
           "adminToken",
-          JSON.stringify(response.data.data.accessToken).replaceAll('"', "")
+          JSON.stringify(response.data.data.adminToken).replaceAll('"', "")
         );
-        Cookies.set("adminToken", response.data.data.accessToken);
+        Cookies.set("adminToken", response.data.data.adminToken);
         router.push("/admin/dashboard");
       }
     } catch (error) {
