@@ -1,6 +1,6 @@
 import { Fragment, useState, useEffect, Suspense } from "react";
 import { Dialog, Menu, Transition } from "@headlessui/react";
-import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
+import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import { PaperClipIcon } from "@heroicons/react/20/solid";
 import {
   Bars3CenterLeftIcon,
@@ -225,6 +225,9 @@ export default function Example() {
                   </div>
                   <div className="mt-6 flex space-x-3 md:ml-4 md:mt-0">
                     <button
+                      onClick={() =>
+                        router.push(`/admin/dashboard/${eventId}/ticket/create`)
+                      }
                       type="button"
                       className="inline-flex items-center rounded-md bg-cyan-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-cyan-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600"
                     >
@@ -350,14 +353,22 @@ export default function Example() {
                                 >
                                   {tickets.status}
                                 </span>
-                                <span>
-                                  <button
-                                    type="button"
-                                    className="inline-flex items-center rounded-md bg-cyan-600 px-2.5 py-0.5 text-xs font-medium text-white shadow-sm hover:bg-cyan-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600"
-                                  >
-                                    Edit Event
-                                  </button>
-                                </span>
+                              </div>
+                              <div className="ml-auto mx-1">
+                                <button
+                                  type="button"
+                                  className="inline-flex items-center rounded-md bg-cyan-600 px-2.5 py-0.5 text-xs font-medium text-white shadow-sm hover:bg-cyan-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600"
+                                >
+                                  Edit
+                                </button>
+                              </div>
+                              <div className="ml-auto mx-1">
+                                <button
+                                  type="button"
+                                  className="inline-flex items-center rounded-md bg-red-600 px-2.5 py-0.5 text-xs font-medium text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+                                >
+                                  Delete
+                                </button>
                               </div>
                             </div>
                           </li>
