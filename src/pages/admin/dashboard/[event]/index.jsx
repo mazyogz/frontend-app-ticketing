@@ -58,9 +58,10 @@ const transactions = [
   // More transactions...
 ];
 const statusStyles = {
+  Available: "bg-green-100 text-green-800",
+  SoldOut: "bg-red-100 text-red-800",
   active: "bg-green-100 text-green-800",
   hide: "bg-yellow-100 text-yellow-800",
-  failed: "bg-gray-100 text-gray-800",
 };
 
 function classNames(...classes) {
@@ -203,15 +204,37 @@ export default function Example() {
           <main className="flex-1 pb-8">
             {/* START PAGE */}
             {/* Page header */}
-            <div className="mx-10 mt-5">
-              <div className="px-4 sm:px-0">
-                <h3 className="text-base font-semibold leading-7 text-gray-900">
-                  Event Information
-                </h3>
-                <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
-                  Event details and tickets.
-                </p>
+            <div className="bg-white shadow">
+              <div className="px-4 sm:px-6 lg:mx-auto lg:max-w-6xl lg:px-8">
+                <div className="py-6 md:flex md:items-center md:justify-between lg:border-t lg:border-gray-200">
+                  <div className="min-w-0 flex-1">
+                    {/* Profile */}
+                    <div className="flex items-center">
+                      <div>
+                        <div className="px-4 sm:px-0">
+                          <h1 className="text-xl font-bold leading-7 text-gray-900">
+                            Event Information
+                          </h1>
+                          <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
+                            Event details and tickets.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="mt-6 flex space-x-3 md:ml-4 md:mt-0">
+                    <button
+                      type="button"
+                      className="inline-flex items-center rounded-md bg-cyan-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-cyan-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600"
+                    >
+                      Add Ticket
+                    </button>
+                  </div>
+                </div>
               </div>
+            </div>
+
+            <div className="mx-10 mt-5">
               <div className="mt-6 border-t border-gray-100">
                 <dl className="divide-y divide-gray-100">
                   <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -224,10 +247,19 @@ export default function Example() {
                   </div>
                   <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                     <dt className="text-sm font-medium leading-6 text-gray-900">
+                      Image
+                    </dt>
+                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                      <img src={eventData?.eventData.picture} alt="" />
+                      {eventData?.eventData.picture}
+                    </dd>
+                  </div>
+                  <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt className="text-sm font-medium leading-6 text-gray-900">
                       Venue
                     </dt>
                     <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                    {eventData?.eventData.venue}
+                      {eventData?.eventData.venue}
                     </dd>
                   </div>
                   <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -235,7 +267,9 @@ export default function Example() {
                       Held On
                     </dt>
                     <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                    {eventData?.eventData.date}, {eventData?.eventData.jam_mulai} - {eventData?.eventData.jam_selesai} 
+                      {eventData?.eventData.date},{" "}
+                      {eventData?.eventData.jam_mulai} -{" "}
+                      {eventData?.eventData.jam_selesai}
                     </dd>
                   </div>
                   <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -243,7 +277,7 @@ export default function Example() {
                       Guest
                     </dt>
                     <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                    {eventData?.eventData.guest} 
+                      {eventData?.eventData.guest}
                     </dd>
                   </div>
                   <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -251,12 +285,35 @@ export default function Example() {
                       Description
                     </dt>
                     <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                    {eventData?.eventData.description} 
+                      {eventData?.eventData.description}
                     </dd>
                   </div>
                   <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                     <dt className="text-sm font-medium leading-6 text-gray-900">
-                      ticket
+                      Terms and Conditions
+                    </dt>
+                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                      {eventData?.eventData.syarat}
+                    </dd>
+                  </div>
+                  <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt className="text-sm font-medium leading-6 text-gray-900">
+                      Event Display Status
+                    </dt>
+                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                      <span
+                        className={classNames(
+                          statusStyles[eventData?.eventData.status],
+                          "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium capitalize"
+                        )}
+                      >
+                        {eventData?.eventData.status}
+                      </span>
+                    </dd>
+                  </div>
+                  <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt className="text-sm font-medium leading-6 text-gray-900">
+                      Tickets
                     </dt>
                     <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                       <ul
@@ -264,19 +321,32 @@ export default function Example() {
                         className="divide-y divide-gray-100 rounded-md border border-gray-200"
                       >
                         {eventData?.ticketData.map((tickets) => (
-                        <li key={tickets.id} className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
-                          <div className="flex w-0 flex-1 items-center">
-                            <div className="ml-4 flex min-w-0 flex-1 gap-2">
-                              <span className="truncate font-medium">
-                                {tickets.name}
-                              </span>
-                              <span className="flex-shrink-0 text-black-400">
-                              {tickets.price}
-                              </span>
+                          <li
+                            key={tickets.id}
+                            className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6"
+                          >
+                            <div className="flex w-0 flex-1 items-center">
+                              <div className="ml-4 flex min-w-0 flex-1 gap-2">
+                                <span className="truncate font-medium">
+                                  {tickets.name}
+                                </span>
+                                <span className="flex-shrink-0 text-black-400">
+                                  {tickets.price}
+                                </span>
+                                <span
+                                  className={classNames(
+                                    tickets.status === "Sold Out"
+                                      ? statusStyles.SoldOut
+                                      : statusStyles.Available,
+                                    "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium capitalize"
+                                  )}
+                                >
+                                  {tickets.status}
+                                </span>
+                              </div>
                             </div>
-                          </div>
-                        </li>
-                          ))}
+                          </li>
+                        ))}
                       </ul>
                     </dd>
                   </div>
