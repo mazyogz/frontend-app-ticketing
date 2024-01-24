@@ -1,5 +1,6 @@
 import { Fragment, useState, useEffect, Suspense } from "react";
 import { Dialog, Menu, Transition } from "@headlessui/react";
+import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 import { PaperClipIcon } from "@heroicons/react/20/solid";
 import {
   Bars3CenterLeftIcon,
@@ -227,7 +228,13 @@ export default function Example() {
                       type="button"
                       className="inline-flex items-center rounded-md bg-cyan-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-cyan-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600"
                     >
-                      Add Ticket
+                      Add New Ticket
+                    </button>
+                    <button
+                      type="button"
+                      className="inline-flex items-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
+                    >
+                      Edit Event
                     </button>
                   </div>
                 </div>
@@ -342,6 +349,14 @@ export default function Example() {
                                   )}
                                 >
                                   {tickets.status}
+                                </span>
+                                <span>
+                                  <button
+                                    type="button"
+                                    className="inline-flex items-center rounded-md bg-cyan-600 px-2.5 py-0.5 text-xs font-medium text-white shadow-sm hover:bg-cyan-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600"
+                                  >
+                                    Edit Event
+                                  </button>
                                 </span>
                               </div>
                             </div>
