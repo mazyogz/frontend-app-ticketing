@@ -26,10 +26,8 @@ import {
 const navigation = [
   { name: 'Home', href: '/admin/dashboard', icon: HomeIcon, current: true },
   { name: 'Events', href: '/admin/dashboard', icon: ClockIcon, current: false },
-  { name: 'Users', href: '/admin/users', icon: ScaleIcon, current: false },
-  { name: 'Cards', href: '#', icon: CreditCardIcon, current: false },
-  { name: 'Recipients', href: '#', icon: UserGroupIcon, current: false },
-  { name: 'Reports', href: '#', icon: DocumentChartBarIcon, current: false },
+  { name: 'Users', href: '/admin/dashboard/users', icon: UserGroupIcon, current: false },
+  { name: 'Invoices', href: '/admin/dashboard/invoices', icon: DocumentChartBarIcon, current: false },
 ]
 const secondaryNavigation = [
   { name: 'Settings', href: '#', icon: CogIcon },
