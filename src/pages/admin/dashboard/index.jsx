@@ -323,11 +323,11 @@ useEffect(() => {
                             <tr key={events.id} className="bg-white">
                               <td className="w-full max-w-0 whitespace-nowrap px-6 py-4 text-sm text-gray-900">
                                 <div className="flex">
-                                  <p href={events.href} className="group inline-flex space-x-2 truncate text-sm">
+                                  <div className="group inline-flex space-x-2 truncate text-sm">
                                     <p className="truncate font-medium text-gray-900 group-hover:text-gray-900">
                                       {events.event_name}
                                     </p>
-                                  </p>
+                                  </div>
                                 </div>
                               </td>
                               <td className="whitespace-nowrap px-6 py-4 text-right text-sm text-gray-500">

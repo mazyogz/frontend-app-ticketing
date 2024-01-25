@@ -15,7 +15,7 @@ import {
   ShieldCheckIcon,
   UserGroupIcon,
   XMarkIcon,
-  CheckIcon
+  CheckIcon,
 } from "@heroicons/react/24/outline";
 import {
   BanknotesIcon,
@@ -43,10 +43,16 @@ export default function Example() {
   const [price, setPrice] = useState("");
   const [status, setStatus] = useState("");
   const cancelButtonRef = useRef(null);
-  const [successDialogOpen, setSuccessDialogOpen] = useState(false); 
+  const [successDialogOpen, setSuccessDialogOpen] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(false);
 
   const router = useRouter();
   const eventId = router.query.event;
+
+  useEffect(() => {
+    const isValid = name.trim() !== "" && price.trim() !== "" && status.trim() !== "";
+    setIsFormValid(isValid);
+  }, [name, price, status]);
 
   const handleLogout = async () => {
     try {
@@ -251,7 +257,7 @@ export default function Example() {
                             type="number"
                             value={price}
                             onChange={(e) => setPrice(e.target.value)}
-                            placeholder="!00000"
+                            placeholder="100000"
                             required
                           />
                         </div>
@@ -268,6 +274,9 @@ export default function Example() {
                             required
                             className="px-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                           >
+                            <option disabled hidden value="">
+                              Select Status
+                            </option>
                             <option>Available</option>
                             <option>Sold Out</option>
                           </select>
@@ -287,6 +296,7 @@ export default function Example() {
 
                   <button
                     type="submit"
+                    disabled={!isFormValid}
                     className="inline-flex justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   >
                     Add
