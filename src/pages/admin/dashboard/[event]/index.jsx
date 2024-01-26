@@ -407,6 +407,9 @@ export default function Example() {
                               </div>
                               <div className="ml-auto mx-1">
                                 <button
+                                 onClick={() => {
+                                  router.push(`/admin/dashboard/${eventId}/ticket/${tickets.id}`);
+                                }}
                                   type="button"
                                   className="inline-flex items-center rounded-md bg-cyan-600 px-2.5 py-0.5 text-xs font-medium text-white shadow-sm hover:bg-cyan-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600"
                                 >
