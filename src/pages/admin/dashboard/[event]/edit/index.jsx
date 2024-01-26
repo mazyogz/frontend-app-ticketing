@@ -606,11 +606,11 @@ export default function Example() {
                         as="h3"
                         className="text-base font-semibold leading-6 text-gray-900"
                       >
-                        Pemesanan Berhasil
+                        Perubahan Berhasil
                       </Dialog.Title>
                       <div className="mt-2">
                         <p className="text-sm text-gray-500">
-                          Tiket Berhasil ditambahkan
+                          Event Berhasil diperbarui
                         </p>
                       </div>
                     </div>
@@ -624,7 +624,7 @@ export default function Example() {
                         router.push(`/admin/dashboard/`);
                       }}
                     >
-                      Lihat Pesanan
+                      Lihat Event
                     </button>
                     <button
                       type="button"
