@@ -197,10 +197,6 @@ export default function Example() {
   setIsFormValid(isValid);
 }, [name, price, status]);
 
-console.log(name)
-console.log(price)
-console.log(status)
-
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <div className="min-h-full">
