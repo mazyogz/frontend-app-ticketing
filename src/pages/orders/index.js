@@ -7,6 +7,7 @@ const statuses = {
   "In progress": "text-gray-600 bg-gray-50 ring-gray-500/10",
   unpaid: "text-yellow-800 bg-yellow-50 ring-yellow-600/20",
   expire: "text-red-800 bg-red-50 ring-red-600/20",
+  refund: "text-red-800 bg-red-50 ring-red-600/20",
   pending: "text-yellow-800 bg-yellow-50 ring-yellow-600/20",
 };
 
@@ -200,109 +201,110 @@ function Order() {
 
   return (
     <>
-    <Navbar/>
-    <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-60">
-      {orderDetail?.status === false && (
-        <div className="min-w-0">
-        <div className="flex items-start gap-x-3">
-          <p className="text-sm font-semibold leading-6 text-gray-900">
-            Belum ada riwayat pembelian, silakan melakukan pembelian
-          </p>
-          <p
-            className={classNames(
-              "rounded-md whitespace-nowrap mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset"
-            )}
-          >
- 
-          </p>
-        </div>
-        <div className="mt-1 flex items-center gap-x-2 text-xs leading-5 text-gray-500">
-          <p className="whitespace-nowrap">
-            <time></time>
-          </p>
-          <p className="truncate">Data Pembelian kosong</p>
-        </div>
+      <Navbar />
+      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-60">
+        {orderDetail?.status === false && (
+          <div className="min-w-0">
+            <div className="flex items-start gap-x-3">
+              <p className="text-sm font-semibold leading-6 text-gray-900">
+                Belum ada riwayat pembelian, silakan melakukan pembelian
+              </p>
+              <p
+                className={classNames(
+                  "rounded-md whitespace-nowrap mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset"
+                )}
+              ></p>
+            </div>
+            <div className="mt-1 flex items-center gap-x-2 text-xs leading-5 text-gray-500">
+              <p className="whitespace-nowrap">
+                <time></time>
+              </p>
+              <p className="truncate">Data Pembelian kosong</p>
+            </div>
 
-        <button
-                  
-                  className="flex flex-none items-center gap-x-4"
-                >
-                  <a
-                    href={'/'}
-                    className="hidden rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:block"
-                  >
-                    Pilih Tiket<span className="sr-only"></span>
-                  </a>
-                </button>
-
-      </div>
-      )}
-      {orderDetail?.status !== false && orderDetail?.data.length > 0 && (
-        <ul>
-          {orderDetail?.data.map((order) => (
-            <li
-              key={order.id}
-              className="flex items-center justify-between gap-x-6 py-5"
-            >
-              <div className="min-w-0">
-                <div className="flex items-start gap-x-3">
-                  <p className="text-sm font-semibold leading-6 text-gray-900">
-                    {order.event.event_name} - {formatCurrency(order.gross)}
-                  </p>
-                  <p
-                    className={classNames(
-                      statuses[order.status],
-                      "rounded-md whitespace-nowrap mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset"
+            <button className="flex flex-none items-center gap-x-4">
+              <a
+                href={"/"}
+                className="hidden rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:block"
+              >
+                Pilih Tiket<span className="sr-only"></span>
+              </a>
+            </button>
+          </div>
+        )}
+        {orderDetail?.status !== false && orderDetail?.data.length > 0 && (
+          <ul>
+            {orderDetail?.data.map((order) => (
+              <li
+                key={order.id}
+                className="flex items-center justify-between gap-x-6 py-5"
+              >
+                <div className="min-w-0">
+                  <div className="flex items-start gap-x-3">
+                    <p className="text-sm font-semibold leading-6 text-gray-900">
+                      {order.event.event_name} - {formatCurrency(order.gross)}
+                    </p>
+                    <p
+                      className={classNames(
+                        statuses[order.status],
+                        "rounded-md whitespace-nowrap mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset"
+                      )}
+                    >
+                      {order.status}
+                    </p>
+                  </div>
+                  <div className="mt-1 flex items-center gap-x-2 text-xs leading-5 text-gray-500">
+                    <p className="whitespace-nowrap">
+                      Tanggal{" "}
+                      <time dateTime={order.date_order}>
+                        {order.date_order}
+                      </time>
+                    </p>
+                    <svg viewBox="0 0 2 2" className="h-0.5 w-0.5 fill-current">
+                      <circle cx={1} cy={1} r={1} />
+                    </svg>
+                    <p className="truncate">Order Id {order.order_id_unik}</p>
+                    {order.status === "settlement"  && (
+                      <a href={'/refund/' + order.order_id_unik} className="truncate">
+                        Ajukan refund?
+                      </a>
                     )}
-                  >
-                    {order.status}
-                  </p>
+                  </div>
                 </div>
-                <div className="mt-1 flex items-center gap-x-2 text-xs leading-5 text-gray-500">
-                  <p className="whitespace-nowrap">
-                    Tanggal{" "}
-                    <time dateTime={order.date_order}>{order.date_order}</time>
-                  </p>
-                  <svg viewBox="0 0 2 2" className="h-0.5 w-0.5 fill-current">
-                    <circle cx={1} cy={1} r={1} />
-                  </svg>
-                  <p className="truncate">Order Id {order.order_id_unik}</p>
-                </div>
-              </div>
-              {["unpaid", "pending"].includes(order.status) && (
-                <button
-                  onClick={() => handlePayment(order.order_id_unik)}
-                  className="flex flex-none items-center gap-x-4"
-                >
-                  <a
-                    href={order.href}
-                    className="hidden rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:block"
+                {["unpaid", "pending"].includes(order.status) && (
+                  <button
+                    onClick={() => handlePayment(order.order_id_unik)}
+                    className="flex flex-none items-center gap-x-4"
                   >
-                    Pembayaran<span className="sr-only">, {order.name}</span>
-                  </a>
-                </button>
-              )}
+                    <a
+                      href={order.href}
+                      className="hidden rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:block"
+                    >
+                      Pembayaran<span className="sr-only">, {order.name}</span>
+                    </a>
+                  </button>
+                )}
 
-              {["settlement", "succes"].includes(order.status) && (
-                <button
-                  onClick={() => handleInvoices(order.order_id_unik)}
-                  className="flex flex-none items-center gap-x-4"
-                >
-                  <a
-                    href={order.href}
-                    className="hidden rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:block"
+                {["settlement", "succes"].includes(order.status) && (
+                  <button
+                    onClick={() => handleInvoices(order.order_id_unik)}
+                    className="flex flex-none items-center gap-x-4"
                   >
-                    Kirim ke Email<span className="sr-only">, {order.name}</span>
-                  </a>
-                </button>
-              )}
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
+                    <a
+                      href={order.href}
+                      className="hidden rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:block"
+                    >
+                      Kirim ke Email
+                      <span className="sr-only">, {order.name}</span>
+                    </a>
+                  </button>
+                )}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </>
-    
   );
 }
 
