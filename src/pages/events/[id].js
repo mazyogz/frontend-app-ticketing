@@ -59,7 +59,55 @@ function EventDetail() {
   };
   console.log(eventDetail);
 
+  // const handleAgree = async () => {
+  //   try {
+  //     if (eventId && selectedTicketId) {
+  //       let accessToken = null;
+
+  //       const cookiesArray = document.cookie.split("; ");
+  //       const accessTokenCookie = cookiesArray.find((cookie) =>
+  //         cookie.startsWith("accessToken=")
+  //       );
+
+  //       if (accessTokenCookie) {
+  //         accessToken = accessTokenCookie.split("=")[1];
+  //       }
+
+  //       if (!accessToken) {
+  //         router.push("/auth/login");
+  //         return;
+  //       }
+
+  //       const response = await fetch(
+  //         `https://backend-app-ticketing-v12-production-7d84.up.railway.app/v1/api/order/${eventId}/${selectedTicketId}`,
+  //         {
+  //           method: "POST",
+  //           headers: {
+  //             Authorization: `Bearer ${accessToken}`,
+  //             "Content-Type": "application/json",
+  //           },
+  //           body: JSON.stringify({}),
+  //         }
+  //       );
+
+  //       if (response.ok) {
+  //         setSuccessDialogOpen(true);
+  //         console.log("Order placed successfully!");
+  //       } else {
+  //         console.error(
+  //           "Failed to place order:",
+  //           response.status,
+  //           response.statusText
+  //         );
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error("Error placing order:", error);
+  //   }
+  // };
+
   const handleAgree = async () => {
+    console.log("handleAgree called");
     try {
       if (eventId && selectedTicketId) {
         let accessToken = null;
@@ -74,6 +122,7 @@ function EventDetail() {
         }
 
         if (!accessToken) {
+          console.error("Access token not found, redirecting to login.");
           router.push("/auth/login");
           return;
         }
@@ -86,7 +135,7 @@ function EventDetail() {
               Authorization: `Bearer ${accessToken}`,
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({}),
+            body: JSON.stringify({}), // Adjust if needed
           }
         );
 
@@ -94,10 +143,12 @@ function EventDetail() {
           setSuccessDialogOpen(true);
           console.log("Order placed successfully!");
         } else {
+          const errorData = await response.json();
           console.error(
             "Failed to place order:",
             response.status,
-            response.statusText
+            response.statusText,
+            errorData
           );
         }
       }
@@ -159,7 +210,9 @@ function EventDetail() {
                   <p className="mt-1 font-medium text-gray-900">
                     {eventDetail.data.eventData.guest}
                   </p>
-                  <p className="mt-3 text-gray-500">{eventDetail.data.eventData.description}</p>
+                  <p className="mt-3 text-gray-500">
+                    {eventDetail.data.eventData.description}
+                  </p>
                 </div>
                 <div className="sm:col-span-12 md:col-span-7">
                   <dl className="grid grid-cols-1 gap-y-8 border-b border-gray-200 py-4 sm:grid-cols-2 sm:gap-x-6 sm:py-4 md:py-4">
