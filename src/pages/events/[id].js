@@ -53,6 +53,47 @@ function EventDetail() {
     fetchData();
   }, [eventId]);
 
+  const handleCheckout = async (orderId, selectedTicketId) => {
+    const router = useRouter();
+    try {
+      let accessToken = null;
+
+      const cookiesArray = document.cookie.split("; ");
+      const accessTokenCookie = cookiesArray.find((cookie) =>
+        cookie.startsWith("accessToken=")
+      );
+
+      if (accessTokenCookie) {
+        accessToken = accessTokenCookie.split("=")[1];
+      }
+
+      const response = await fetch(
+        `https://backend-app-ticketing-v12-production-7d84.up.railway.app/v1/api/order/${orderId}/${selectedTicketId}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({}),
+        }
+      );
+
+      if (response.ok) {
+        console.log("success");
+        router.push('/orders'); 
+      } else {
+        console.error(
+          "Failed to place order:",
+          response.status,
+          response.statusText
+        );
+      }
+    } catch (error) {
+      console.error("Error placing order:", error);
+    }
+  };
+
   const toggleModal = (ticketId) => {
     setModalOpen(!isModalOpen);
     setSelectedTicketId(ticketId);
@@ -106,56 +147,56 @@ function EventDetail() {
   //   }
   // };
 
-  const handleAgree = async () => {
-    console.log("handleAgree called");
-    try {
-      if (eventId && selectedTicketId) {
-        let accessToken = null;
+  // const handleAgree = async () => {
+  //   console.log("handleAgree called");
+  //   try {
+  //     if (eventId && selectedTicketId) {
+  //       let accessToken = null;
 
-        const cookiesArray = document.cookie.split("; ");
-        const accessTokenCookie = cookiesArray.find((cookie) =>
-          cookie.startsWith("accessToken=")
-        );
+  //       const cookiesArray = document.cookie.split("; ");
+  //       const accessTokenCookie = cookiesArray.find((cookie) =>
+  //         cookie.startsWith("accessToken=")
+  //       );
 
-        if (accessTokenCookie) {
-          accessToken = accessTokenCookie.split("=")[1];
-        }
+  //       if (accessTokenCookie) {
+  //         accessToken = accessTokenCookie.split("=")[1];
+  //       }
 
-        if (!accessToken) {
-          console.error("Access token not found, redirecting to login.");
-          router.push("/auth/login");
-          return;
-        }
+  //       if (!accessToken) {
+  //         console.error("Access token not found, redirecting to login.");
+  //         router.push("/auth/login");
+  //         return;
+  //       }
 
-        const response = await fetch(
-          `https://backend-app-ticketing-v12-production-7d84.up.railway.app/v1/api/order/${eventId}/${selectedTicketId}`,
-          {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({}), // Adjust if needed
-          }
-        );
+  //       const response = await fetch(
+  //         `https://backend-app-ticketing-v12-production-7d84.up.railway.app/v1/api/order/${eventId}/${selectedTicketId}`,
+  //         {
+  //           method: "POST",
+  //           headers: {
+  //             Authorization: `Bearer ${accessToken}`,
+  //             "Content-Type": "application/json",
+  //           },
+  //           body: JSON.stringify({}), // Adjust if needed
+  //         }
+  //       );
 
-        if (response.ok) {
-          setSuccessDialogOpen(true);
-          console.log("Order placed successfully!");
-        } else {
-          const errorData = await response.json();
-          console.error(
-            "Failed to place order:",
-            response.status,
-            response.statusText,
-            errorData
-          );
-        }
-      }
-    } catch (error) {
-      console.error("Error placing order:", error);
-    }
-  };
+  //       if (response.ok) {
+  //         setSuccessDialogOpen(true);
+  //         console.log("Order placed successfully!");
+  //       } else {
+  //         const errorData = await response.json();
+  //         console.error(
+  //           "Failed to place order:",
+  //           response.status,
+  //           response.statusText,
+  //           errorData
+  //         );
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error("Error placing order:", error);
+  //   }
+  // };
 
   if (!eventDetail) {
     return <div>Loading...</div>;
@@ -247,13 +288,13 @@ function EventDetail() {
                 key={ticket.id}
                 onClick={() => {
                   if (ticket.status !== "Sold Out") {
-                    toggleModal(ticket.id);
+                    handleCheckout(eventId, selectedTicketId)
                   }
                 }}
                 disabled={ticket.status === "Sold Out"}
                 className="overflow-hidden rounded-lg bg-white shadow"
               >
-                {isModalOpen && (
+                {/* {isModalOpen && (
                   <div
                     className="relative z-10"
                     aria-labelledby="modal-title"
@@ -318,7 +359,7 @@ function EventDetail() {
                       </div>
                     </div>
                   </div>
-                )}
+                )} */}
                 <div className="p-5">
                   <div className="flex items-center">
                     <div className="w-0 flex-1">
@@ -354,7 +395,7 @@ function EventDetail() {
         </div>
       </div>
 
-      <Transition.Root show={successDialogOpen} as={Fragment}>
+      {/* <Transition.Root show={successDialogOpen} as={Fragment}>
         <Dialog
           as="div"
           className="relative z-10"
@@ -434,7 +475,7 @@ function EventDetail() {
             </div>
           </div>
         </Dialog>
-      </Transition.Root>
+      </Transition.Root> */}
 
       <Footer />
     </>
