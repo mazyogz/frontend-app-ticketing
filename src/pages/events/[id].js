@@ -234,7 +234,7 @@ function EventDetail() {
                                   className="text-base font-semibold leading-6 text-gray-900"
                                   id="modal-title"
                                 >
-                                  Lakukan Transaksi
+                                  Lakukan Transaksi {eventId}/{selectedTicketId}
                                 </h3>
                                 <div className="mt-2">
                                   <p className="text-sm text-gray-500">
