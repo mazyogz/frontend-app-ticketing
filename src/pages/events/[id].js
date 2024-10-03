@@ -73,7 +73,7 @@ function EventDetail() {
         }
 
         const response = await fetch(
-          `https://backend-app-ticketing-v12-production-7d84.up.railway.app/${eventId}/${selectedTicketId}`,
+          `https://backend-app-ticketing-v12-production-7d84.up.railway.app/v1/api/order/${eventId}/${selectedTicketId}`,
           {
             method: "POST",
             headers: {
