@@ -40,7 +40,7 @@ function EventDetail() {
       try {
         if (eventId) {
           const response = await fetch(
-            `backend-app-ticketing-v12-production-7d84.up.railway.appv1/api/events/${eventId}`
+            `backend-app-ticketing-v12-production-7d84.up.railway.app/v1/api/events/${eventId}`
           );
           const data = await response.json();
           setEventDetail(data);
