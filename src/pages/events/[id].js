@@ -40,7 +40,7 @@ function EventDetail() {
       try {
         if (eventId) {
           const response = await fetch(
-            `https://backend-app-ticketing-v12-production-7d84.up.railway.app/v1/api/events/${eventId}`
+            `https://backend-app-ticketing-v12-production.up.railway.app/v1/api/events/${eventId}`
           );
           const data = await response.json();
           setEventDetail(data);
@@ -53,150 +53,58 @@ function EventDetail() {
     fetchData();
   }, [eventId]);
 
-  const handleCheckout = async (orderId, selectedTicketId) => {
-    const router = useRouter();
-    try {
-      let accessToken = null;
-
-      const cookiesArray = document.cookie.split("; ");
-      const accessTokenCookie = cookiesArray.find((cookie) =>
-        cookie.startsWith("accessToken=")
-      );
-
-      if (accessTokenCookie) {
-        accessToken = accessTokenCookie.split("=")[1];
-      }
-
-      const response = await fetch(
-        `https://backend-app-ticketing-v12-production-7d84.up.railway.app/v1/api/order/${orderId}/${selectedTicketId}`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({}),
-        }
-      );
-
-      if (response.ok) {
-        console.log("success");
-        router.push('/orders'); 
-      } else {
-        console.error(
-          "Failed to place order:",
-          response.status,
-          response.statusText
-        );
-      }
-    } catch (error) {
-      console.error("Error placing order:", error);
-    }
-  };
-
   const toggleModal = (ticketId) => {
     setModalOpen(!isModalOpen);
     setSelectedTicketId(ticketId);
   };
   console.log(eventDetail);
 
-  // const handleAgree = async () => {
-  //   try {
-  //     if (eventId && selectedTicketId) {
-  //       let accessToken = null;
+  const handleAgree = async () => {
+    try {
+      if (eventId && selectedTicketId) {
+        let accessToken = null;
 
-  //       const cookiesArray = document.cookie.split("; ");
-  //       const accessTokenCookie = cookiesArray.find((cookie) =>
-  //         cookie.startsWith("accessToken=")
-  //       );
+        const cookiesArray = document.cookie.split("; ");
+        const accessTokenCookie = cookiesArray.find((cookie) =>
+          cookie.startsWith("accessToken=")
+        );
 
-  //       if (accessTokenCookie) {
-  //         accessToken = accessTokenCookie.split("=")[1];
-  //       }
+        if (accessTokenCookie) {
+          accessToken = accessTokenCookie.split("=")[1];
+        }
 
-  //       if (!accessToken) {
-  //         router.push("/auth/login");
-  //         return;
-  //       }
+        if (!accessToken) {
+          router.push("/auth/login");
+          return;
+        }
 
-  //       const response = await fetch(
-  //         `https://backend-app-ticketing-v12-production-7d84.up.railway.app/v1/api/order/${eventId}/${selectedTicketId}`,
-  //         {
-  //           method: "POST",
-  //           headers: {
-  //             Authorization: `Bearer ${accessToken}`,
-  //             "Content-Type": "application/json",
-  //           },
-  //           body: JSON.stringify({}),
-  //         }
-  //       );
+        const response = await fetch(
+          `https://backend-app-ticketing-v12-production.up.railway.app/v1/api/order/${eventId}/${selectedTicketId}`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({}),
+          }
+        );
 
-  //       if (response.ok) {
-  //         setSuccessDialogOpen(true);
-  //         console.log("Order placed successfully!");
-  //       } else {
-  //         console.error(
-  //           "Failed to place order:",
-  //           response.status,
-  //           response.statusText
-  //         );
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.error("Error placing order:", error);
-  //   }
-  // };
-
-  // const handleAgree = async () => {
-  //   console.log("handleAgree called");
-  //   try {
-  //     if (eventId && selectedTicketId) {
-  //       let accessToken = null;
-
-  //       const cookiesArray = document.cookie.split("; ");
-  //       const accessTokenCookie = cookiesArray.find((cookie) =>
-  //         cookie.startsWith("accessToken=")
-  //       );
-
-  //       if (accessTokenCookie) {
-  //         accessToken = accessTokenCookie.split("=")[1];
-  //       }
-
-  //       if (!accessToken) {
-  //         console.error("Access token not found, redirecting to login.");
-  //         router.push("/auth/login");
-  //         return;
-  //       }
-
-  //       const response = await fetch(
-  //         `https://backend-app-ticketing-v12-production-7d84.up.railway.app/v1/api/order/${eventId}/${selectedTicketId}`,
-  //         {
-  //           method: "POST",
-  //           headers: {
-  //             Authorization: `Bearer ${accessToken}`,
-  //             "Content-Type": "application/json",
-  //           },
-  //           body: JSON.stringify({}), // Adjust if needed
-  //         }
-  //       );
-
-  //       if (response.ok) {
-  //         setSuccessDialogOpen(true);
-  //         console.log("Order placed successfully!");
-  //       } else {
-  //         const errorData = await response.json();
-  //         console.error(
-  //           "Failed to place order:",
-  //           response.status,
-  //           response.statusText,
-  //           errorData
-  //         );
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.error("Error placing order:", error);
-  //   }
-  // };
+        if (response.ok) {
+          setSuccessDialogOpen(true);
+          console.log("Order placed successfully!");
+        } else {
+          console.error(
+            "Failed to place order:",
+            response.status,
+            response.statusText
+          );
+        }
+      }
+    } catch (error) {
+      console.error("Error placing order:", error);
+    }
+  };
 
   if (!eventDetail) {
     return <div>Loading...</div>;
@@ -210,7 +118,7 @@ function EventDetail() {
       <div className="bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h1 className="text-3xl font-bold tracking-tight text-gray-900">
-            Events Details
+            Events Detail
           </h1>
 
           <div className="mt-2 border-b border-gray-200 pb-5 text-sm sm:flex sm:justify-between">
@@ -251,9 +159,7 @@ function EventDetail() {
                   <p className="mt-1 font-medium text-gray-900">
                     {eventDetail.data.eventData.guest}
                   </p>
-                  <p className="mt-3 text-gray-500">
-                    {eventDetail.data.eventData.description}
-                  </p>
+                  <p className="mt-3 text-gray-500">{eventDetail.data.eventData.description}</p>
                 </div>
                 <div className="sm:col-span-12 md:col-span-7">
                   <dl className="grid grid-cols-1 gap-y-8 border-b border-gray-200 py-4 sm:grid-cols-2 sm:gap-x-6 sm:py-4 md:py-4">
@@ -288,13 +194,13 @@ function EventDetail() {
                 key={ticket.id}
                 onClick={() => {
                   if (ticket.status !== "Sold Out") {
-                    handleCheckout(eventId, selectedTicketId)
+                    toggleModal(ticket.id);
                   }
                 }}
                 disabled={ticket.status === "Sold Out"}
                 className="overflow-hidden rounded-lg bg-white shadow"
               >
-                {/* {isModalOpen && (
+                {isModalOpen && (
                   <div
                     className="relative z-10"
                     aria-labelledby="modal-title"
@@ -328,7 +234,7 @@ function EventDetail() {
                                   className="text-base font-semibold leading-6 text-gray-900"
                                   id="modal-title"
                                 >
-                                  Lakukan Transaksi {eventId}/{selectedTicketId}
+                                  Lakukan Transaksi
                                 </h3>
                                 <div className="mt-2">
                                   <p className="text-sm text-gray-500">
@@ -359,7 +265,7 @@ function EventDetail() {
                       </div>
                     </div>
                   </div>
-                )} */}
+                )}
                 <div className="p-5">
                   <div className="flex items-center">
                     <div className="w-0 flex-1">
@@ -395,7 +301,7 @@ function EventDetail() {
         </div>
       </div>
 
-      {/* <Transition.Root show={successDialogOpen} as={Fragment}>
+      <Transition.Root show={successDialogOpen} as={Fragment}>
         <Dialog
           as="div"
           className="relative z-10"
@@ -475,7 +381,7 @@ function EventDetail() {
             </div>
           </div>
         </Dialog>
-      </Transition.Root> */}
+      </Transition.Root>
 
       <Footer />
     </>
