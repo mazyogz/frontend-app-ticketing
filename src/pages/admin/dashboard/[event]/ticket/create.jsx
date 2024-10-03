@@ -87,7 +87,7 @@ export default function Example() {
         }
 
         const response = await fetch(
-          `https://backend-app-ticketing-v12-production.up.railway.app/v1/api/admin/event/${eventId}/ticket`,
+          `https://backend-app-ticketing-v12-production-7d84.up.railway.app/v1/api/admin/event/${eventId}/ticket`,
           {
             method: "POST",
             headers: {

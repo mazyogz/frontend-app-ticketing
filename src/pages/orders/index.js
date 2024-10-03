@@ -54,7 +54,7 @@ function Order() {
       }
 
       const response = await fetch(
-        `https://backend-app-ticketing-v12-production.up.railway.app/v1/api/payment/${orderId}`,
+        `https://backend-app-ticketing-v12-production-7d84.up.railway.app/v1/api/payment/${orderId}`,
         {
           method: "POST",
           headers: {
@@ -96,7 +96,7 @@ function Order() {
       }
 
       const response = await fetch(
-        `https://backend-app-ticketing-v12-production.up.railway.app/v1/api/invoice/${orderId}`,
+        `https://backend-app-ticketing-v12-production-7d84.up.railway.app/v1/api/invoice/${orderId}`,
         {
           method: "POST",
           headers: {
@@ -114,7 +114,7 @@ function Order() {
         if (data.message === "Invoice already generated!") {
           // Kasus "Invoice already generated!", arahkan ke endpoint kedua
           const resendResponse = await fetch(
-            `https://backend-app-ticketing-v12-production.up.railway.app/v1/api/invoice/${orderId}/resend`,
+            `https://backend-app-ticketing-v12-production-7d84.up.railway.app/v1/api/invoice/${orderId}/resend`,
             {
               method: "POST",
               headers: {
@@ -159,7 +159,7 @@ function Order() {
             }
   
             const response = await fetch(
-              `https://backend-app-ticketing-v12-production.up.railway.app/v1/api/order-all`,
+              `https://backend-app-ticketing-v12-production-7d84.up.railway.app/v1/api/order-all`,
               {
                 method: "GET",
                 headers: {

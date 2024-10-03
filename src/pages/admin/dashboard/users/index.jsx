@@ -100,7 +100,7 @@ useEffect(() => {
         }
 
         const response = await fetch(
-          `https://backend-app-ticketing-v12-production.up.railway.app/v1/api/users`,
+          `https://backend-app-ticketing-v12-production-7d84.up.railway.app/v1/api/users`,
           {
             method: "GET",
             headers: {

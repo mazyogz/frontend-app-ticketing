@@ -1,5 +1,5 @@
 export async function fetchOrderData(eventId, ticketId, accessToken) {
-    const apiUrl = `https://backend-app-ticketing-v12-production.up.railway.app/v1/api/order/${eventId}/${ticketId}`;
+    const apiUrl = `https://backend-app-ticketing-v12-production-7d84.up.railway.app/v1/api/order/${eventId}/${ticketId}`;
     
     try {
       const response = await fetch(apiUrl, {

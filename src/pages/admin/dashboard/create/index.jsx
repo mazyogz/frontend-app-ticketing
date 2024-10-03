@@ -126,7 +126,7 @@ export default function Example() {
       formData.append("qty", qty);
 
       const response = await fetch(
-        `https://backend-app-ticketing-v12-production.up.railway.app/v1/api/admin/create-event`,
+        `https://backend-app-ticketing-v12-production-7d84.up.railway.app/v1/api/admin/create-event`,
         {
           method: "POST",
           headers: {

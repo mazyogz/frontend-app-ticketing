@@ -7,7 +7,7 @@ export default async function handler(req, res) {
     try {
       // Make a POST request to the forgot password API endpoint
       const response = await axios.post(
-        "https://backend-app-ticketing-v12-production.up.railway.app/v1/api/forgot-password-otp",
+        "https://backend-app-ticketing-v12-production-7d84.up.railway.app/v1/api/forgot-password-otp",
         { email }
       );
 

@@ -5,7 +5,7 @@ export default async function handler(req, res) {
     try {
       const { email, password } = req.body;
 
-      const response = await axios.post('https://backend-app-ticketing-v12-production.up.railway.app/v1/api/login', {
+      const response = await axios.post('https://backend-app-ticketing-v12-production-7d84.up.railway.app/v1/api/login', {
         email,
         password,
       });

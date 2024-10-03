@@ -48,7 +48,7 @@ export default function Example() {
             }
   
             const response = await fetch(
-              `https://backend-app-ticketing-v12-production.up.railway.app/v1/api/order-all/${orderId}`,
+              `https://backend-app-ticketing-v12-production-7d84.up.railway.app/v1/api/order-all/${orderId}`,
               {
                 method: "GET",
                 headers: {
@@ -93,7 +93,7 @@ export default function Example() {
       formData.append("reason", reason);
       
       const response = await fetch(
-        `https://backend-app-ticketing-v12-production.up.railway.app/v1/api/refund/${orderId}`,
+        `https://backend-app-ticketing-v12-production-7d84.up.railway.app/v1/api/refund/${orderId}`,
         {
           method: "POST",
           headers: {
